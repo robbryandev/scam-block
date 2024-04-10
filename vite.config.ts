@@ -12,13 +12,19 @@ export default defineConfig({
         description: "prevent you from getting phished",
         version: "1.0.0",
         manifest_version: 3,
+        host_permissions: ["*://*/*"],
+        permissions: ["proxy"],
         content_scripts: [
           {
             matches: ["*://*/*"],
             js: ["frontend/scripts/content.ts"]
           }
-        ]
-      },
+        ],
+        background: {
+          service_worker: "frontend/scripts/background.ts",
+          type: "module"
+        }
+      }
     })
   ]
 })
