@@ -1,48 +1,36 @@
-// import render from 'preact-render-to-string';
-// import { App } from '../app';
+async function checkUrl(url: string) {
+  const backendHost = import.meta.env.VITE_BACKEND_HOST;
+  const backendPort = import.meta.env.VITE_BACKEND_PORT;
 
-// const url = window.location.href;
-// const backendUrl = import.meta.env.VITE_BACKEND_URL;
-// const replacement = render(App());
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
 
-const backendHost = "127.0.0.1";
-const backendPort = 5000;
+  console.log("sending type: " + headers.get("Content-Type"))
 
-async function main() {
-  console.log("Loaded scam-block");
+  const fetchRes = await fetch(`http://${backendHost}:${backendPort}/check`, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+      site: url
+    })
+  });
 
-  try {
-    const fetchRes = await fetch(`http://${backendHost}:${backendPort}`, {
-      method: "GET",
-      mode: "no-cors"
-    });
+  const textRes = await fetchRes.text();
+  console.log("Response from API:", textRes);
 
-    const textRes = await fetchRes.text();
-    console.log("Response from API:", textRes);
-
-    // Send message to content script with API response
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      if (tabs.length > 0 && tabs[0].id) {
-        chrome.tabs.sendMessage(tabs[0].id, {
-          action: "updateContent",
-          data: textRes
-        });
-      }
-    });
-  } catch (error) {
-    console.error("Error fetching data from API:", error);
-  }
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    if (tabs.length > 0 && tabs[0].id) {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        action: "checkRes",
+        data: textRes
+      });
+    }
+  });
 }
 
-chrome.runtime.onStartup.addListener(function () {
-  main();
-});
-
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  void tabId
-  void tab
-  // Execute main whenever a tab is updated
-  if (changeInfo.status === "complete") {
-    main();
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.action === "checkUrl") {
+    const url = message.data;
+    checkUrl(url);
   }
-});
+})
