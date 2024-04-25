@@ -32,7 +32,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "frontend"
+    "src"
   ],
   "references": [
     {
