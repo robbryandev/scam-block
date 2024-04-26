@@ -23,7 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 
-.env
-
-backend/__pycache__
-backend/.venv
+src/output.css

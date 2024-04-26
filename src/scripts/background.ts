@@ -1,3 +1,5 @@
+import { jaroDistance } from "../utils/distance";
+
 const importSites = import.meta.glob("../data/top.json", { "eager": true });
 
 async function checkUrl(url: string) {
@@ -18,14 +20,31 @@ async function checkUrl(url: string) {
     return site.sites
   });
 
-  // temporarily block all non top sites
-  const scam = !topSites.includes(url);
+  let top = topSites.includes(url);
+
+  let scam = false;
+  let finalDistance = 0;
+  let simmilarSite = "";
+
+  if (!top) {
+    for (let i = 0; i < topSites.length; i++) {
+      const site = topSites[i];
+      const distance = jaroDistance(url, site);
+      if (distance < 1 && distance > 0.87) {
+        console.log(`distance: ${distance}`)
+        scam = true;
+        finalDistance = distance;
+        simmilarSite = site;
+        break;
+      }
+    }
+  }
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     if (tabs.length > 0 && tabs[0].id) {
       chrome.tabs.sendMessage(tabs[0].id, {
         action: "checkRes",
-        data: JSON.stringify({ scam: scam })
+        data: JSON.stringify({ scam: scam, site: simmilarSite, distance: finalDistance })
       });
     }
   });
@@ -33,14 +52,7 @@ async function checkUrl(url: string) {
 
 chrome.runtime.onMessage.addListener((message) => {
   if (message.action === "checkUrl") {
-    let data: string = message.data;
-    const matches = data.match(/[^.]*\.[^.]{2,3}(?:\.[^.]{2,3})?$/gi);
-    if (!matches || !matches.length) {
-      console.log(`invalid url: ${message.data}`);
-      return
-    }
-
-    const url: string = matches[0];
+    let url: string = message.data;
 
     console.log(`checking url: ${url}`)
     checkUrl(url);
