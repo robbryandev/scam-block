@@ -13,6 +13,7 @@ export default defineConfig({
         version: "1.0.0",
         manifest_version: 3,
         host_permissions: ["*://*/*"],
+        permissions: ["storage"],
         content_scripts: [
           {
             matches: ["*://*/*"],

@@ -27,12 +27,23 @@ function main() {
       if (data.scam === true) {
         setTimeout(() => {
           const body = document.body.innerHTML;
+          const storageKey: string = "site_exceptions"
+          chrome.storage.local.get([storageKey]).then((exceptions) => {
+            let isException = false;
+            if (Array.isArray(exceptions[storageKey]) && exceptions[storageKey].includes(url)) {
+              isException = true;
+            }
 
-          document.body.replaceChildren(preactRoot);
-          const newRoot = document.getElementById(rootID);
-          if (newRoot) {
-            render(App({ url: url, body: body }), newRoot);
-          }
+            if (!isException) {
+              document.body.replaceChildren(preactRoot);
+              const newRoot = document.getElementById(rootID);
+              if (newRoot) {
+                render(App({ url: url, body: body }), newRoot);
+              }
+            }
+          }).catch((err) => {
+            console.log(err)
+          })
         }, 500)
       }
     }

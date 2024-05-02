@@ -1,8 +1,9 @@
-import { jaroDistance } from "../utils/distance";
+import { stringDistance } from "../utils/distance";
 
 const importSites = import.meta.glob("../data/top.json", { "eager": true });
 
 async function checkUrl(url: string) {
+  const threshold = 0.8;
   const resolveImportSites = Object.values(importSites);
   const siteData = resolveImportSites as any;
 
@@ -29,8 +30,9 @@ async function checkUrl(url: string) {
   if (!top) {
     for (let i = 0; i < topSites.length; i++) {
       const site = topSites[i];
-      const distance = jaroDistance(url, site);
-      if (distance < 1 && distance > 0.87) {
+      const distance = stringDistance(url, site);
+      console.log("stringDistance: " + distance);
+      if (distance < 1 && distance >= threshold) {
         console.log(`distance: ${distance}`)
         scam = true;
         finalDistance = distance;
@@ -38,6 +40,8 @@ async function checkUrl(url: string) {
         break;
       }
     }
+  } else {
+    console.log("site in top sites")
   }
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
