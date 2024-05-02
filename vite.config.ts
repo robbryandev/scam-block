@@ -9,7 +9,7 @@ export default defineConfig({
     webExtension({
       manifest: {
         name: "Scam Block",
-        description: "This Chrome extension is designed to protect you from falling victim to phishing scams. It works by analyzing the websites you visit and warning you of any potential threats, helping keep your personal information secure.",
+        description: "This extension strengthens your online security by analyzing websites for phishing scams.",
         version: "1.0.0",
         manifest_version: 3,
         host_permissions: ["*://*/*"],

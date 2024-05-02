@@ -81,7 +81,7 @@ function jaroWinkler(original: string, comparison: string) {
 
     newDistance += 0.1 * prefix * (1 - newDistance);
   }
-  return parseInt(newDistance.toFixed(6));
+  return newDistance
 }
 
 
