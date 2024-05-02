@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "bun css && bun ext",
+    "build": "bun css && bun ext && bun assets",
     "build:full": "bun data && bun run build",
     "ext": "tsc && vite build",
     "data": "bun src/data/fetch.ts",
-    "css": "bunx tailwindcss -i ./src/app.css -o ./src/output.css"
+    "css": "bunx tailwindcss -i ./src/app.css -o ./src/output.css",
+    "assets": "cp -r ./src/assets/ ./dist/"
   },
   "dependencies": {
     "@samrum/vite-plugin-web-extension": "^5.1.0",

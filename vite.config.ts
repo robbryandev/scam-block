@@ -8,8 +8,8 @@ export default defineConfig({
     preact(),
     webExtension({
       manifest: {
-        name: "scam block",
-        description: "prevent you from getting phished",
+        name: "Scam Block",
+        description: "This Chrome extension is designed to protect you from falling victim to phishing scams. It works by analyzing the websites you visit and warning you of any potential threats, helping keep your personal information secure.",
         version: "1.0.0",
         manifest_version: 3,
         host_permissions: ["*://*/*"],
@@ -23,6 +23,12 @@ export default defineConfig({
         background: {
           service_worker: "src/scripts/background.ts",
           type: "module"
+        },
+        icons: {
+          "16": "assets/Icon-16x16.png",
+          "32": "assets/Icon-32x32.png",
+          "48": "assets/Icon-48x48.png",
+          "128": "assets/Icon-128x128.png"
         }
       }
     })
