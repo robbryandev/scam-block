@@ -12,16 +12,15 @@ export default defineConfig({
         description: "This extension strengthens your online security by analyzing websites for phishing scams.",
         version: "1.0.0",
         manifest_version: 3,
-        host_permissions: ["*://*/*"],
-        permissions: ["storage"],
+        permissions: ["storage", "activeTab"],
         content_scripts: [
           {
             matches: ["*://*/*"],
-            js: ["src/scripts/content.ts"]
+            js: ["scripts/content.ts"]
           }
         ],
         background: {
-          service_worker: "src/scripts/background.ts",
+          service_worker: "scripts/background.ts",
           type: "module"
         },
         icons: {

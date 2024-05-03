@@ -32,7 +32,11 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src"
+    "src",
+    "scripts/background.ts",
+    "scripts/content.ts",
+    "utils/fetch.ts",
+    "clean.ts"
   ],
   "references": [
     {

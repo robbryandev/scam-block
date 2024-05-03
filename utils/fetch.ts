@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import { writeFileSync } from "fs";
+import { $ } from "bun";
 
 const path = import.meta.dirname;
 
@@ -90,6 +91,7 @@ async function main() {
 
   console.log("STEP: writing data file")
   writeFileSync(`${path}/top.json`, JSON.stringify(data));
+  await $`mv ${path}/top.json src/data/`
 }
 
 main()

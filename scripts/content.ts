@@ -1,5 +1,5 @@
 import { render } from 'preact';
-import { App } from '../app';
+import { App } from '../src/app';
 
 const rootID = "scam-block-root";
 
@@ -22,9 +22,9 @@ function main() {
 
   chrome.runtime.onMessage.addListener((message) => {
     if (message.action === "checkRes" && typeof message.data !== "undefined") {
-      console.log("Received data from background script:", message.data);
       const data = JSON.parse(message.data);
       if (data.scam === true) {
+        console.log(message.data);
         setTimeout(() => {
           const body = document.body.innerHTML;
           const storageKey: string = "site_exceptions"

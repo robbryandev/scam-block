@@ -1,4 +1,4 @@
-import { stringDistance } from "../utils/distance";
+import { stringDistance } from "../src/utils/distance";
 
 const importSites = import.meta.glob("../data/top.json", { "eager": true });
 

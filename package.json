@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "bun css && bun ext && bun assets",
+    "build": "bun css && bun ext && bun clean",
     "build:full": "bun data && bun run build",
     "ext": "tsc && vite build",
-    "data": "bun src/data/fetch.ts",
+    "data": "bun utils/fetch.ts",
     "css": "bunx tailwindcss -i ./src/app.css -o ./src/output.css",
-    "assets": "cp -r ./src/assets/ ./dist/"
+    "clean": "bun utils/clean.ts"
   },
   "dependencies": {
     "@samrum/vite-plugin-web-extension": "^5.1.0",
@@ -19,8 +19,11 @@
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.8.2",
+    "@types/bun": "^1.1.1",
     "@types/chrome": "^0.0.265",
+    "@types/cross-zip": "^4.0.2",
     "autoprefixer": "^10.4.19",
+    "cross-zip": "^4.0.1",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
