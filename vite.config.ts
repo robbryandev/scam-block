@@ -16,11 +16,11 @@ export default defineConfig({
         content_scripts: [
           {
             matches: ["*://*/*"],
-            js: ["scripts/content.ts"]
+            js: ["src/scripts/content.ts"]
           }
         ],
         background: {
-          service_worker: "scripts/background.ts",
+          service_worker: "src/scripts/background.ts",
           type: "module"
         },
         icons: {

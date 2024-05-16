@@ -1,5 +1,5 @@
 import { render } from 'preact';
-import { App } from '../src/app';
+import { App } from '../app';
 
 const rootID = "scam-block-root";
 

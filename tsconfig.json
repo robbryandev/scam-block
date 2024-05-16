@@ -33,8 +33,8 @@
   },
   "include": [
     "src",
-    "scripts/background.ts",
-    "scripts/content.ts",
+    "src/scripts/background.ts",
+    "src/scripts/content.ts",
     "utils/fetch.ts",
     "clean.ts"
   ],
